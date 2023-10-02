@@ -17,8 +17,8 @@ class Reservas extends Model
     
 
     protected $hidden=[
-        "vehiculos_id",
-        "clientes_id",
+        "vehiculo_id",
+        "cliente_id",
         "id",
         "created_at",
         "updated_at"
@@ -26,11 +26,11 @@ class Reservas extends Model
     
     //relaciones de uno a uno
     public function cliente(){
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Clientes::class);
     }
 
     public function vehiculo(){
-    return $this->belongsTo(Vehiculo::class);
+    return $this->belongsTo(Vehiculos::class);
     }
  
 }

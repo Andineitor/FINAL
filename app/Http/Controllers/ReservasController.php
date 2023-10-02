@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservas;
 use Illuminate\Http\Request;
 
 class ReservasController extends Controller
@@ -11,9 +12,15 @@ class ReservasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $reservas = Reservas::with(['cliente', 'vehiculo'])
+        ->where('codigo', 'like', "%{$request->buscar}%")
+        ->get();
+    
+
+        return $reservas;
     }
 
     /**
@@ -25,6 +32,13 @@ class ReservasController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->all(); 
+        $input['user_id']= auth()->user()->id; 
+        $reservas=Reservas::create($input);
+        
+        return \response()->json(['res'=> true, 'message'=> 'Insertado correctamente'],200);
+
+
     }
 
     /**
@@ -36,6 +50,9 @@ class ReservasController extends Controller
     public function show($id)
     {
         //
+        $reservas = Reservas::with(['cliente', 'vehiculo'])->find($id);
+
+        return $reservas;
     }
 
     /**
@@ -48,6 +65,10 @@ class ReservasController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $input = $request->all();
+        $reservas = Reservas::find($id);
+        $reservas->update($input);
+        return \response()->json(['res'=> true,'message'=> 'Modificado correctamente'],200);
     }
 
     /**
@@ -59,5 +80,14 @@ class ReservasController extends Controller
     public function destroy($id)
     {
         //
+        try{
+            //
+            Reservas::destroy($id);
+            return \response()->json(['res'=> true, 'message'=> 'elimando correctamente'],200);
+        }
+        catch (\Exception $e) {
+            return \response()->json(['res'=> false, 'message'=> $e->getMessage()],200);
+    
+        }
     }
 }

@@ -26,8 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // API para pacientes
     Route::apiResource('clientes', App\Http\Controllers\ClientesController::class);
-    Route::apiResource('reservas', App\Http\Controllers\EspecialidadController::class);
-    Route::apiResource('vehiculos', App\Http\Controllers\CitaController::class);
+    Route::apiResource('reservas', App\Http\Controllers\ReservasController::class);
+    Route::apiResource('vehiculos', App\Http\Controllers\VehiculosController::class);
 
 
 
