@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   //const [errors, setErrors] = useState([]);
 
-  const signup = async (user) => {
+/*   const signup = async (user) => {
     try {
       console.log("respuesta")
       const res = await registerRequest(user);
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       console.log(error.response);
       //setErrors(error.response.data.message);
     }
-  };
+  }; */
 
   const signin = async (user) => {
     try {
@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
       console.log("login: ",res)
       setUser(res.data);
       setIsAuthenticated(true);
+
     } catch (error) {
       console.log(error);
       // setErrors(error.response.data.message);
@@ -72,7 +73,16 @@ export const AuthProvider = ({ children }) => {
       } */
       try {
         //console.log("verifing");
-        const res = await verifyTokenRequest(cookies.token);
+
+        //const res = await verifyTokenRequest(cookies.token);
+
+        const res = await loginRequest(user);
+        console.log("login: ", res)
+        setUser(res.data);
+        setIsAuthenticated(true);
+
+
+
         //console.log("verify: ", res, " -cookie: ",cookies.token);
 
         
